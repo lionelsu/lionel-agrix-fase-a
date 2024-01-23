@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,11 @@ public class FarmController {
   public ResponseEntity<List<FarmDto>> getAllFarms() {
     List<Farm> farms = farmService.getAllFarms();
     return ResponseEntity.ok(farms.stream().map(FarmDto::toDto).collect(Collectors.toList()));
+  }
+
+  @GetMapping("/{farmId}")
+  public ResponseEntity<Farm> getFarmById(@PathVariable Long farmId) {
+    Farm farm = farmService.getFarmById(farmId);
+    return ResponseEntity.ok(farm);
   }
 }

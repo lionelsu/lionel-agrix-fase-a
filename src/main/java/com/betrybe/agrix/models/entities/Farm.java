@@ -36,6 +36,9 @@ public class Farm {
     this.size = size;
   }
 
+  public Farm() {
+  }
+
   public Long getId() {
     return id;
   }
@@ -62,5 +65,9 @@ public class Farm {
 
   public Double getSize() {
     return size;
+  }
+
+  public void setSize(Double size) {
+    this.size = size;
   }
 }
