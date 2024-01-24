@@ -1,7 +1,10 @@
 package com.betrybe.agrix.controllers;
 
+import com.betrybe.agrix.controllers.dto.CropDto;
 import com.betrybe.agrix.controllers.dto.FarmDto;
+import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
+import com.betrybe.agrix.services.CropService;
 import com.betrybe.agrix.services.FarmService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,10 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/farms")
 public class FarmController {
   private final FarmService farmService;
+  private final CropService cropService;
 
   @Autowired
-  public FarmController(FarmService farmService) {
+  public FarmController(FarmService farmService, CropService cropService) {
     this.farmService = farmService;
+    this.cropService = cropService;
   }
 
   @PostMapping
@@ -44,5 +49,13 @@ public class FarmController {
   public ResponseEntity<Farm> getFarmById(@PathVariable Long farmId) {
     Farm farm = farmService.getFarmById(farmId);
     return ResponseEntity.ok(farm);
+  }
+
+  @PostMapping("/{farmId}/crops")
+  public ResponseEntity<CropDto> createCrop(
+      @PathVariable Long farmId,
+      @RequestBody CropDto cropDto) {
+    Crop crop = farmService.createCrop(farmId, cropDto.toCrop());
+    return ResponseEntity.status(HttpStatus.CREATED).body(CropDto.toDto(crop));
   }
 }

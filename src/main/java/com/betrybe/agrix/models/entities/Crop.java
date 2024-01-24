@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 /**
  * Crop entity.
  */
-
 @Entity
 @Table(name = "crops")
 public class Crop {
